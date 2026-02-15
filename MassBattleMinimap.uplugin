@@ -1,0 +1,26 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "MassBattleMinimap",
+	"Description": "Agentic Minimap Actor system for MassBattle.",
+	"Category": "Gameplay",
+	"CreatedBy": "Winyunq",
+	"Modules": [
+		{
+			"Name": "MassBattleMinimap",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "MassBattle",
+			"Enabled": true
+		},
+		{
+			"Name": "MassEntity",
+			"Enabled": true
+		}
+	]
+}

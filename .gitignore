@@ -1,0 +1,16 @@
+Binaries
+Intermediate
+Saved
+*.log
+*.obj
+*.pdb
+.vs
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+.idea
+.vscode
+*.opensdf
+*.sdf
+*.suo
