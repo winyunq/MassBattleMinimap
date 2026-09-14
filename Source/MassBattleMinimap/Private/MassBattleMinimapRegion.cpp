@@ -11,6 +11,12 @@ AMinimapRegion::AMinimapRegion()
 	// 设置半长度为 0.5，这样总长度为 1.0。
 	// 此时 Actor 的 Scale 属性直接等于地图的 UU 尺寸 (例如 Scale 65536 = 65536 UU)。
 	BoundsComponent->SetBoxExtent(FVector(0.5f, 0.5f, 0.5f));
+	// The region is metadata/editor visualization only. If it participates in
+	// collision, its map-sized bounds make every build-placement overlap test
+	// fail and can also interfere with other world queries.
+	BoundsComponent->SetCollisionProfileName(FName(TEXT("NoCollision")));
+	BoundsComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	BoundsComponent->SetGenerateOverlapEvents(false);
 	BoundsComponent->ShapeColor = FColor::Green;
 	BoundsComponent->bDrawOnlyIfSelected = false;
 	OverflowComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("OverflowBounds"));
@@ -37,6 +43,11 @@ void AMinimapRegion::OnConstruction(const FTransform& Transform)
 		// 强制物理底座为 0.5，确保 Scale 1.0 = 1.0 UU 全宽。
 		// 这样即便编辑器之前缓存了 32 的默认值，也会被这里的代码在构造时强行修正。
 		BoundsComponent->SetBoxExtent(FVector(0.5f, 0.5f, 0.5f));
+		// Re-apply for existing serialized level instances created before the
+		// component default was corrected.
+		BoundsComponent->SetCollisionProfileName(FName(TEXT("NoCollision")));
+		BoundsComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		BoundsComponent->SetGenerateOverlapEvents(false);
 	}
 
 	UpdateVisuals();
